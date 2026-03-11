@@ -1,0 +1,6 @@
+@LogisticAssistantMinimalAPI_HostAddress = http://localhost:5010
+
+GET {{LogisticAssistantMinimalAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

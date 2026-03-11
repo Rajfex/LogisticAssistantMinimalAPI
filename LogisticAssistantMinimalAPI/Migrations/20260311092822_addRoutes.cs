@@ -1,0 +1,52 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+namespace LogisticAssistantMinimalAPI.Migrations
+{
+    /// <inheritdoc />
+    public partial class addRoutes : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Routes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TruckId = table.Column<int>(type: "int", nullable: false),
+                    Distance = table.Column<int>(type: "int", nullable: false),
+                    BreakFrequency = table.Column<int>(type: "int", nullable: false),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TruckVmax = table.Column<int>(type: "int", nullable: false),
+                    TruckDriverBreak = table.Column<int>(type: "int", nullable: false),
+                    RemainingToBreak = table.Column<double>(type: "float", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Routes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Routes_Trucks_TruckId",
+                        column: x => x.TruckId,
+                        principalTable: "Trucks",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Routes_TruckId",
+                table: "Routes",
+                column: "TruckId");
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Routes");
+        }
+    }
+}
