@@ -7,7 +7,7 @@ namespace LogisticAssistantMinimalAPI
     {
         public static void MapTruckRouteEndpoints(this WebApplication app)
         {
-            app.MapGet("/", async (AppDbContext context) =>
+            app.MapGet("/api/trucksRoute/", async (AppDbContext context) =>
             {
                 var routes = await context.Routes
                     .Include(r => r.Truck)
@@ -16,7 +16,7 @@ namespace LogisticAssistantMinimalAPI
                 return Results.Ok(routes);
             });
 
-            app.MapGet("/{id:int}", async (int id, AppDbContext context) =>
+            app.MapGet("/api/trucksRoute/{id:int}", async (int id, AppDbContext context) =>
             {
                 var route = await context.Routes
                     .Include(r => r.Truck)
@@ -28,7 +28,7 @@ namespace LogisticAssistantMinimalAPI
                 return Results.Ok(route);
             });
 
-            app.MapGet("/trucks", async (AppDbContext context) =>
+            app.MapGet("/api/trucksRoute/trucks", async (AppDbContext context) =>
             {
                 var trucks = await context.Trucks
                     .ToDictionaryAsync(t => t.Id, t => t.LicensePlate);
@@ -36,7 +36,7 @@ namespace LogisticAssistantMinimalAPI
                 return Results.Ok(trucks);
             });
 
-            app.MapPost("/", async (TruckRouteViewModel truckRouteView, AppDbContext context) =>
+            app.MapPost("/api/trucksRoute/create", async (TruckRouteViewModel truckRouteView, AppDbContext context) =>
             {
                 var truck = await context.Trucks
                     .FirstOrDefaultAsync(t => t.Id == truckRouteView.TruckId);
